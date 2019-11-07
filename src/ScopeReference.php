@@ -2,6 +2,12 @@
 
 namespace Azonmedia\Patterns;
 
+/**
+ * Class ScopeReference
+ * To be used to invoke callbacks when the scope is abandoned (be it because of return statement or exception thrown in this or child scope).
+ * An instance from this class is to be kept only in automatic variable in the local scope.
+ * @package Azonmedia\Patterns
+ */
 class ScopeReference
 {
     const DESTRUCTION_REASON_UNKNOWN = 0;//if it stays to this one it means the scope was left without being correctly destroyed (this would be reaching return)
