@@ -13,6 +13,10 @@
             "role": "Developer"
         }
     ],
+    "require": {
+        "php": ">=7.2.0",
+        "azonmedia/components": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Azonmedia\\Patterns\\": "src/"
