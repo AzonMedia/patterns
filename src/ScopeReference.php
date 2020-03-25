@@ -11,28 +11,24 @@ namespace Azonmedia\Patterns;
  */
 class ScopeReference
 {
-    const DESTRUCTION_REASON_UNKNOWN = 0;//if it stays to this one it means the scope was left without being correctly destroyed (this would be reaching return)
-    const DESTRUCTION_REASON_OVERWRITING = 1;
-    const DESTRUCTION_REASON_EXCEPTION = 2;//in a cycle the reference got overwritten by another one before being explicitly and correctly destroyed
-    const DESTRUCTION_REASON_EXPLICIT = 3;//intentionally and correctly destroyed
 
-    public static $destruction_reason_map = [
-        self::DESTRUCTION_REASON_UNKNOWN => 'unknown',
-        self::DESTRUCTION_REASON_OVERWRITING => 'overwriting',
-        self::DESTRUCTION_REASON_EXCEPTION => 'exception',
-        self::DESTRUCTION_REASON_EXPLICIT => 'explicit',
-    ];
+//    public const DESTRUCTION_REASON = [
+//        'RETURN'        => 'RETURN',//if it stays to this one it means the scope was left without being correctly destroyed (this would be reaching return)
+//        'OVERWRITTEN'   => 'OVERWRITTEN',//in a cycle the reference got overwritten by another one before being explicitly and correctly destroyed
+//        'EXCEPTION'     => 'EXCEPTION',//destroyed because the scope was destroyed due to an exception
+//        'EXPLICIT'      => 'EXPLICIT',//intentionally and correctly destroyed
+//    ];
 
     /**
      * These callbacks will be executed on object destruction
      * @var array Array of callbacks
      */
-    protected $callbacks = [];
+    protected array $callbacks = [];
 
-    /**
-     * @var int
-     */
-    protected $destruction_reason;
+//    /**
+//     * @var string
+//     */
+//    protected string $destruction_reason = self::DESTRUCTION_REASON['RETURN'];
 
     public function __construct(callable $callback = NULL)
     {
@@ -51,6 +47,14 @@ class ScopeReference
         $this->callbacks[] = $callback;
     }
 
+    /**
+     * To be used when no callback should be executed on reference destruction.
+     */
+    public function remove_callbacks() : void
+    {
+        $this->callbacks = [];
+    }
+
     private function execute_callbacks(): void
     {
         foreach ($this->callbacks as $callback) {
@@ -58,22 +62,35 @@ class ScopeReference
         }
     }
 
-    /**
-     *
-     * @return int
-     */
-    public function get_destruction_reason()
-    {
-        return $this->destruction_reason;
-    }
-
-    /**
-     *
-     * @param int $reason
-     */
-    public function set_destruction_reason($reason)
-    {
-        // TODO validate
-        $this->destruction_reason = $reason;
-    }
+//    /**
+//     *
+//     * @return string
+//     */
+//    public function get_destruction_reason() : string
+//    {
+//        return $this->destruction_reason;
+//    }
+//
+//    /**
+//     *
+//     * @param string $reason
+//     */
+//    public function set_destruction_reason(string $reason)
+//    {
+//        self::validate_destruction_reason($reason);
+//        $this->destruction_reason = $reason;
+//    }
+//
+//    protected static function validate_destruction_reason(string $reason) : void
+//    {
+//        if (!$reason) {
+//            //
+//        }
+//        if (!ctype_upper($reason)) {
+//
+//        }
+//        if (!isset(self::DESTRUCTION_REASON[$reason])) {
+//            //
+//        }
+//    }
 }
