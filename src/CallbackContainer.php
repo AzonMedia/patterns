@@ -16,7 +16,7 @@ class CallbackContainer
     {
         foreach ($callables as $key=>$callable) {
             if (!is_callable($callable)) {
-                throw new InvalidArgumentException(sprintf(t::_('The %1s element in the provided $callables is not a valid callable.'), $key));
+                throw new InvalidArgumentException(sprintf(t::_('The %1$s element in the provided $callables is not a valid callable.'), $key));
             }
         }
         $this->callables = $callables;
